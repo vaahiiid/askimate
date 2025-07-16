@@ -76,7 +76,19 @@ USE_TZ = True
 
 # Static files
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # اینجا فایل‌ها با collectstatic ریخته می‌شن
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'home_page/static'),
+]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    
+]
 
 # WhiteNoise: GZIP + Cache برای استاتیک
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
