@@ -8,7 +8,8 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", 'django-insecure-your-secret-key-her
 
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost,0.0.0.0").split(",")
+ALLOWED_HOSTS = ['askimate.onrender.com', 'localhost', '127.0.0.1']
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
