@@ -26,8 +26,8 @@ COPY . .
 RUN python manage.py collectstatic --noinput
 
 # Expose port for Render (should match the port gunicorn binds to)
-EXPOSE 8
-000
+EXPOSE 8000
+
 
 # Start Gunicorn server
 CMD ["gunicorn", "AskiMate_platform.wsgi:application", "--bind", "0.0.0.0:8000"]
