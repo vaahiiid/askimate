@@ -114,3 +114,21 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'askimatetest@gmail.com'
 EMAIL_HOST_PASSWORD = 'yzxs ftbh pjed pgdb'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+import sys
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}
+
