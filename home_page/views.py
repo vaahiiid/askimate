@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.http import HttpResponseServerError
 
 # تنظیمات لاگ
 logger = logging.getLogger(__name__)
@@ -21,10 +22,15 @@ def main_page(request):
             # بررسی اینکه ایمیل قبلاً ثبت شده یا نه
             existing_emails = set()
             if os.path.isfile(csv_path):
-                with open(csv_path, mode='r', encoding='utf-8') as f:
-                    reader = csv.DictReader(f)
-                    for row in reader:
-                        existing_emails.add(row['Email'].strip().lower())
+                try:
+                    with open(csv_path, mode='r', encoding='utf-8') as f:
+                        reader = csv.DictReader(f)
+                        for row in reader:
+                            existing_emails.add(row['Email'].strip().lower())
+                except Exception as e:
+                    logger.error(f"Error reading CSV file: {e}")
+                    messages.error(request, "Server error while checking your email.")
+                    return redirect('main_page')
 
             if email in existing_emails:
                 messages.error(request, "You have already joined the waiting list before.")
