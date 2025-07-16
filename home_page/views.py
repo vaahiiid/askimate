@@ -6,9 +6,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.http import HttpResponseServerError
 
-# تنظیمات لاگ
 logger = logging.getLogger(__name__)
 
 def main_page(request):
@@ -28,7 +26,7 @@ def main_page(request):
                         for row in reader:
                             existing_emails.add(row['Email'].strip().lower())
                 except Exception as e:
-                    logger.error(f"Error reading CSV file: {e}")
+                    logger.error(f"Error reading CSV: {e}")
                     messages.error(request, "Server error while checking your email.")
                     return redirect('main_page')
 
@@ -53,7 +51,8 @@ def main_page(request):
             subject = "Welcome to AskiMate Waiting List!"
             message = (
                 f"Hello {full_name},\n\n"
-                f"Thank you for joining the AskiMate waiting list! We'll keep you updated with the latest news and updates.\n\n"
+                f"Thank you for joining the AskiMate waiting list! "
+                f"We'll keep you updated with the latest news and updates.\n\n"
                 f"Best regards,\nThe AskiMate Team"
             )
 
@@ -61,8 +60,8 @@ def main_page(request):
                 send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email], fail_silently=False)
                 messages.success(request, "Thank you for joining the waiting list! A confirmation email has been sent.")
             except Exception as e:
-                logger.warning(f"Email not sent to {email}: {e}")
-                messages.warning(request, "You joined the waiting list, but we couldn't send the confirmation email.")
+                logger.error(f"Email not sent to {email}: {e}")
+                messages.warning(request, "You joined the list, but confirmation email failed to send.")
 
             return redirect('main_page')
         else:
@@ -97,7 +96,8 @@ def contact_form(request):
             user_subject = "We received your message at AskiMate!"
             user_message = (
                 f"Hi {name},\n\n"
-                f"Thanks for reaching out to us! We’ve received your message and will get back to you as soon as possible.\n\n"
+                f"Thanks for reaching out to us! "
+                f"We’ve received your message and will get back to you as soon as possible.\n\n"
                 f"Your message:\n{message}\n\n"
                 f"Best,\nAskiMate Team"
             )
