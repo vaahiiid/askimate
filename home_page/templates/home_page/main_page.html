@@ -1,0 +1,474 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AskiMate - Your AI Mate for Studying Abroad</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      background-color: #ffffff;
+      color: #42147d;
+      padding-top: 60px; /* برای جبران فیکس شدن نوبار */
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .btn-brand {
+      background-color: #fca82e;
+      color: #fff;
+      border: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-brand:hover {
+      background-color: #e99e27;
+      color: #fff;
+    }
+
+    header {
+      z-index: 1030;
+    }
+
+    .navbar-fixed {
+      background: linear-gradient(135deg, #42147d 0%, #321162 100%);
+      box-shadow: 0 4px 15px rgba(66, 20, 125, 0.5);
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    a.nav-link, a.nav-link:hover {
+      color: #ffffff;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    a.nav-link:hover {
+      color: #fca82e;
+    }
+
+    .navbar-brand {
+      font-weight: 900;
+      font-size: 1.8rem;
+      letter-spacing: 1.2px;
+      color: #ffffff !important;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-brand:hover {
+      color: #fca82e !important;
+    }
+
+    /* Offcanvas style for mobile */
+    .offcanvas.bg-primary {
+      background: linear-gradient(135deg, #42147d 0%, #321162 100%);
+    }
+
+    .offcanvas .nav-link {
+      color: #ffffff;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    .offcanvas .btn-brand {
+      background-color: #fca82e;
+      color: #fff;
+    }
+
+    section {
+      margin-bottom: 4rem;
+    }
+
+    /* Hero animations */
+    #join h1 {
+      animation: fadeInDown 1s ease forwards;
+    }
+
+    #join p {
+      animation: fadeInUp 1s ease 0.5s forwards;
+      opacity: 0;
+    }
+
+    #join form {
+      animation: fadeIn 1s ease 1s forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeInDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .join-box {
+  border: 2px solid #fca82e; 
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(252, 168, 46, 0.3);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUpBox 1s ease forwards;
+  animation-delay: 1.2s;
+}
+
+@keyframes fadeInUpBox {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+    /* Footer styling */
+    footer {
+      background-color: #42147d;
+      color: white;
+      padding: 3rem 1rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    footer a {
+      color: #fca82e;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    footer a:hover {
+      color: #fff3d1;
+      text-decoration: underline;
+    }
+
+    .footer-container {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .footer-section {
+      flex: 1 1 220px;
+      min-width: 180px;
+    }
+
+    .footer-section h5 {
+      margin-bottom: 1rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-size: 1.2rem;
+      border-bottom: 2px solid #fca82e;
+      padding-bottom: 0.3rem;
+    }
+
+    .contact-info p, .contact-info a {
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Simple SVG icons styling */
+    .footer-icon {
+      width: 18px;
+      height: 18px;
+      fill: #fca82e;
+      flex-shrink: 0;
+    }
+
+    /* Bottom copyright */
+    .footer-bottom {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: #d1c7f7;
+    }
+
+    /* ---------- تغییرات برای اسکرول ---------- */
+    .navbar-scroll {
+      background-color: #ffffff !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+      border-bottom-left-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    /* تغییر پس‌زمینه درون نوبار (nav) */
+    .navbar-scroll nav.navbar {
+      background-color: #ffffff !important;
+    }
+
+    .navbar-scroll a.nav-link,
+    .navbar-scroll .navbar-brand {
+      color: #000000 !important;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-scroll a.nav-link:hover,
+    .navbar-scroll .navbar-brand:hover {
+      color: #fca82e !important;
+    }
+
+    .navbar-scroll .btn-brand {
+      background-color: #fca82e !important;
+      color: #fff !important;
+      border: none !important;
+    }
+
+    .navbar-scroll .btn-brand:hover {
+      background-color: #e99e27 !important;
+      color: #fff !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header with Fixed Navbar -->
+<header class="fixed-top navbar-fixed">
+  <nav class="navbar navbar-expand-md navbar-dark py-2">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">AskiMate</a>
+
+      <!-- Toggler برای موبایل -->
+      <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- منوی دسکتاپ (فقط در سایز md به بالا) -->
+      <ul class="navbar-nav ms-auto d-none d-md-flex align-items-center">
+        <li class="nav-item"><a href="#about" class="nav-link px-3">About Us</a></li>
+        <li class="nav-item"><a href="#careers" class="nav-link px-3">Careers</a></li>
+        <li class="nav-item"><a href="#contact" class="nav-link px-3">Contact Us</a></li>
+        <li class="nav-item ms-3">
+          <a href="#join" class="btn btn-sm btn-brand px-4">Join the waiting list</a>
+        </li>
+      </ul>
+
+      <!-- Offcanvas برای موبایل -->
+      <div class="offcanvas offcanvas-end bg-primary text-white d-md-none" tabindex="-1" id="mobileNav" aria-labelledby="mobileNavLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="mobileNavLabel">Menu</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a href="#about" class="nav-link">About Us</a></li>
+            <li class="nav-item"><a href="#careers" class="nav-link">Careers</a></li>
+            <li class="nav-item"><a href="#contact" class="nav-link">Contact Us</a></li>
+            <li class="nav-item mt-3">
+              <a href="#join" class="btn btn-brand w-100">Join the Waiting List</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+</header>
+
+
+<main class="container pt-5 my-5">
+
+  {% if messages %}
+  <div class="container mb-4">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <!-- Hero Section -->
+<section class="row align-items-center" id="join">
+  <div class="col-md-6">
+    <h1>AskiMate: Your AI Mate for Studying Abroad</h1>
+    <p>From course selection and applications to everyday student life abroad, we are your lifelong AI companion.</p>
+  </div>
+  <div class="col-md-6 join-box">
+    <h4>Join the Waiting List</h4>
+    <form method="POST" action="{% url 'main_page' %}">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="fullName" class="form-label">Full Name:</label>
+        <input type="text" id="fullName" name="fullName" class="form-control" required />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email Address:</label>
+        <input type="email" id="email" name="email" class="form-control" required />
+      </div>
+      <button type="submit" class="btn btn-brand">Join Now →</button>
+    </form>
+  </div>
+</section>
+
+
+  <!-- About Us -->
+  <section id="about">
+    <h2>About Us</h2>
+    <p>AskiMate is more than a chatbot — it's your AI Mate for studying abroad.</p>
+    <p>Preparing to study in another country can be exciting — and overwhelming. From choosing the right course and understanding university requirements, to navigating visas, accommodation, and culture shock, there’s a lot to figure out. </p>
+    <p>That’s where AskiMate comes in.</p>
+    <p>As your personal AI Mate, we’re here to support you with smart, friendly, and reliable answers — anytime you need them. Behind the scenes, every response is shaped not only by powerful AI but also reviewed and guided by real experts in international university admissions.</p>
+    <p>Whether you're just starting your journey or have already been accepted, AskiMate helps you move forward with clarity and confidence.</p>
+    <p>One conversation at a time, we're making studying abroad simpler — and smarter.</p>
+  </section>
+
+  <!-- Meet the Team -->
+  <section>
+    <h2>Meet the Team</h2>
+    <div class="row text-center">
+      <div class="col-12 col-md-6 mb-4 team-member">
+        <img src="{% static 'images/vahid.jpg' %}" alt="Vahid Mohammadi" class="rounded-circle mb-2" width="150" height="150">
+        <h5>Vahid Mohammadi</h5>
+        <p>Co-Founder - Team Lead</p>
+        <a href="https://www.linkedin.com/in/vahidmohamadi/" target="_blank" style="color: #42147d;">LinkedIn</a>
+      </div>
+      <div class="col-12 col-md-6 mb-4 team-member">
+        <img src="{% static 'images/iman.jpg' %}" alt="Iman Behravan" class="rounded-circle mb-2" width="150" height="150">
+        <h5>Iman Behravan</h5>
+        <p>Co-Founder - Technical Lead</p>
+        <a href="#" target="_blank" style="color: #42147d;">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Careers -->
+  <section id="careers">
+    <h2>Careers</h2>
+    <p>Want to build something meaningful with us?</p>
+    <p>AskiMate is growing — and we’re always looking for curious, creative, and passionate people to join our journey.</p>
+    <p>Whether you're into tech, content, design, education, or you just believe you can add value in any way, we’d love to hear from you.</p>
+    <p>Drop us an email at <a href="mailto:careers@askimate.com" style="color: #42147d;">careers@askimate.com</a> and let’s have a chat.</p>
+  </section>
+
+  <!-- Contact Us -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <form method="post" action="{% url 'contact_form' %}">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-12 col-md-6 mb-3">
+          <label for="contactName" class="form-label">Name</label>
+          <input type="text" class="form-control" name="contact_name" id="contactName" required>
+        </div>
+        <div class="col-12 col-md-6 mb-3">
+          <label for="contactEmail" class="form-label">Email</label>
+          <input type="email" class="form-control" name="contact_email" id="contactEmail" required>
+        </div>
+        <div class="col-12 mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea class="form-control" name="contact_message" id="message" rows="4" required></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-brand">Send Message</button>
+    </form>
+
+  </section>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section contact-info">
+      <h5>Contact Us</h5>
+      <p>
+        <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 3h20v18H2z" fill="none"/><path d="M20 2H4c-1.1 0-2 .9-2 2v16a2 2 0 002 2h16a2 2 0 002-2V4c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V4l8 5 8-5v2z"/></svg>
+        <a href="mailto:hello@askimate.com">hello@askimate.com</a>
+      </p>
+      <p>
+        <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.2.48 2.5.74 3.85.74a1 1 0 011 1v3.25a1 1 0 01-1 1C10.75 20.5 3.5 13.25 3.5 4a1 1 0 011-1h3.25a1 1 0 011 1c0 1.35.26 2.65.74 3.85a1 1 0 01-.21 1.11l-2.2 2.2z"/></svg>
+        +44 121 720 3341
+      </p>
+      <p>
+        <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.5 5h-15A1.5 1.5 0 003 6.5v11A1.5 1.5 0 004.5 19h15a1.5 1.5 0 001.5-1.5v-11A1.5 1.5 0 0019.5 5zM12 15.5l-4.5-3 4.5-3 4.5 3-4.5 3z"/></svg>
+        Apex House, Birmingham, UK
+      </p>
+    </div>
+
+    <div class="footer-section">
+      <h5>Connect with Us</h5>
+      <p>
+        <a href="https://api.whatsapp.com/send/?phone=447963345465" target="_blank" rel="noopener">
+          <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.52 3.48A11.92 11.92 0 0012 1a11.92 11.92 0 00-8.48 2.48A11.88 11.88 0 001 12c0 2.18.68 4.17 1.83 5.84L1 23l5.23-1.75A11.94 11.94 0 0012 23c6.63 0 12-5.37 12-12a11.95 11.95 0 00-3.48-8.52zM12 21a9 9 0 01-4.63-1.3l-.33-.2-3.11 1.04 1.05-3.03-.22-.34A9 9 0 113 12a9 9 0 019 9zm5.45-7.75l-1.7-.5a1 1 0 00-1.06.25l-1 .97a6.11 6.11 0 01-2.85-2.85l.96-1a1 1 0 00.25-1.06l-.5-1.71a1 1 0 00-1-.67H8a1 1 0 00-1 .9 7.56 7.56 0 005.13 5.13 1 1 0 00.91-1v-2.42a1 1 0 00-.66-1z"/></svg>
+          WhatsApp
+        </a>
+      </p>
+      <p>
+        <a href="https://www.linkedin.com/company/askimate" target="_blank" rel="noopener">
+          <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4.98 3.5A2.48 2.48 0 002.5 6a2.48 2.48 0 002.48 2.5A2.48 2.48 0 007.5 6a2.48 2.48 0 00-2.52-2.5zM2 9h6v12H2zm9 0h6v1.72h.08a6.6 6.6 0 015.94-3.08c6.36 0 7.53 4.18 7.53 9.6V21H17v-7.72c0-1.84 0-4.22-2.56-4.22-2.56 0-2.95 2-2.95 4.07V21H9z"/></svg>
+          LinkedIn
+        </a>
+      </p>
+      <p>
+        <a href="https://t.me/askimate" target="_blank" rel="noopener">
+          <svg class="footer-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.95 16.45l-.35 3.83c.5 0 .72-.22.98-.5l2.35-2.23 4.86 3.57c.89.49 1.52.23 1.75-.83L21.23 6.4c.28-1.18-.42-1.66-1.2-1.38L3.5 11.2c-1.14.44-1.13 1.07-.2 1.37z"/></svg>
+          Telegram
+        </a>
+      </p>
+    </div>
+
+    <div class="footer-section">
+      <h5>Quick Links</h5>
+      <p><a href="#join">Join Now</a></p>
+      <p><a href="#about">About Us</a></p>
+      <p><a href="#careers">Careers</a></p>
+      <p><a href="#contact">Contact Us</a></p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    &copy; 2025 AskiMate. All rights reserved.
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- اسکریپت تغییر رنگ نوبار هنگام اسکرول -->
+<script>
+  window.addEventListener('scroll', function() {
+    const header = document.querySelector('header.navbar-fixed');
+    const nav = header.querySelector('nav.navbar');
+    if(window.scrollY > 50) {
+      header.classList.add('navbar-scroll');
+      nav.classList.remove('navbar-dark');
+      nav.classList.add('navbar-light');
+    } else {
+      header.classList.remove('navbar-scroll');
+      nav.classList.remove('navbar-light');
+      nav.classList.add('navbar-dark');
+    }
+  });
+</script>
+
+</body>
+</html>
