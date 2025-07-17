@@ -29,7 +29,7 @@
     body {
       background-color: var(--white);
       color: var(--primary);
-      padding-top: 60px;
+      padding-top: 80px; /* افزایش پدینگ برای نوبار بزرگتر */
       font-family: 'Poppins', sans-serif;
       scroll-behavior: smooth;
     }
@@ -219,6 +219,20 @@
 
     .navbar-brand img {
       filter: none !important; /* غیرفعال کردن فیلتر رنگ روی لوگو */
+      height: 40px !important; /* افزایش سایز لوگو */
+      transition: all 0.3s ease;
+    }
+
+    /* تغییرات جدید برای نوبار بزرگتر */
+    .navbar {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      min-height: 80px;
+    }
+
+    .navbar-nav .nav-item {
+      display: flex;
+      align-items: center;
     }
 
     /* Offcanvas style for mobile */
@@ -433,6 +447,13 @@
       margin-bottom: 1.5rem;
     }
 
+    /* استایل جدید برای خط زیر Contact Us */
+    #contact h2::after {
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      bottom: -15px !important;
+    }
+
     /* Footer styling */
     footer {
       background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
@@ -610,6 +631,11 @@
       .contact-modal .modal-body {
         padding: 1.5rem;
       }
+
+      /* تغییرات ریسپانسیو برای نوبار */
+      .navbar-brand img {
+        height: 35px !important;
+      }
     }
 
     @media (max-width: 576px) {
@@ -620,6 +646,10 @@
       .contact-modal .modal-title {
         font-size: 1.25rem;
       }
+
+      .navbar-brand img {
+        height: 30px !important;
+      }
     }
   </style>
 </head>
@@ -629,8 +659,8 @@
 <header class="fixed-top navbar-fixed">
   <nav class="navbar navbar-expand-md navbar-light py-2">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="#">
-        <img src="{% static 'images/askimate.png' %}" alt="AskiMate" height="30" class="d-inline-block align-top">
+      <a class="navbar-brand fw-bold" href="#" onclick="window.location.reload()">
+        <img src="{% static 'images/askimate.png' %}" alt="AskiMate" height="40" class="d-inline-block align-top">
       </a>
 
       <!-- Toggler برای موبایل -->
