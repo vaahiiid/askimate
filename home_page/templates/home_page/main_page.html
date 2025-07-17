@@ -34,9 +34,105 @@
       scroll-behavior: smooth;
     }
 
+    /* ====== Improved Title Styles ====== */
     h1, h2, h3, h4, h5, h6 {
       font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    section h2 {
+      font-size: 2.2rem;
+      background: linear-gradient(90deg, var(--primary), var(--dark));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      padding-bottom: 0.5rem;
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2rem;
+    }
+
+    section h2::after {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 4px;
+      bottom: -10px;
+      left: 0;
+      background: var(--secondary);
+      border-radius: 2px;
+    }
+
+    /* ====== New Contact Modal Styles ====== */
+    .contact-modal .modal-content {
+      border: none;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(66, 20, 125, 0.2);
+    }
+
+    .contact-modal .modal-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+      color: white;
+      border-bottom: none;
+      padding: 1.5rem;
+    }
+
+    .contact-modal .modal-title {
       font-weight: 600;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .contact-modal .modal-body {
+      padding: 2rem;
+    }
+
+    .contact-modal .btn-close {
+      filter: invert(1);
+      opacity: 0.8;
+      transition: all 0.3s ease;
+    }
+
+    .contact-modal .btn-close:hover {
+      opacity: 1;
+      transform: rotate(90deg);
+    }
+
+    .contact-modal .form-control {
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      border: 1px solid #e0e0e0;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .contact-modal .form-control:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 0.25rem rgba(252, 168, 46, 0.25);
+    }
+
+    .contact-modal .submit-btn {
+      background: var(--secondary);
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-weight: 500;
+      width: 100%;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .contact-modal .submit-btn:hover {
+      background: #e99e27;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(252, 168, 46, 0.3);
     }
 
     /* Buttons */
@@ -141,24 +237,6 @@
     section {
       margin-bottom: 6rem;
       padding-top: 2rem;
-    }
-
-    section h2 {
-      position: relative;
-      display: inline-block;
-      margin-bottom: 2rem;
-      color: var(--primary);
-    }
-
-    section h2::after {
-      content: '';
-      position: absolute;
-      width: 50%;
-      height: 4px;
-      bottom: -10px;
-      left: 0;
-      background: linear-gradient(90deg, var(--secondary), var(--primary));
-      border-radius: 2px;
     }
 
     /* Hero Section */
@@ -309,14 +387,6 @@
       font-size: 1.1rem;
       line-height: 1.8;
       margin-bottom: 1.5rem;
-    }
-
-    /* Contact Section */
-    #contact form {
-      background-color: var(--white);
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
     }
 
     /* Footer styling */
@@ -515,6 +585,20 @@
       section h2 {
         font-size: 1.8rem;
       }
+      
+      .contact-modal .modal-body {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .contact-modal .modal-header {
+        padding: 1rem;
+      }
+      
+      .contact-modal .modal-title {
+        font-size: 1.25rem;
+      }
     }
   </style>
 </head>
@@ -664,38 +748,52 @@
   <!-- Contact Us -->
   <section id="contact" class="animate-on-scroll">
     <h2><i class="fas fa-envelope me-2"></i>Contact Us</h2>
-    <form method="post" action="{% url 'contact_form' %}">
-      {% csrf_token %}
-      <div class="row">
-        <div class="col-12 col-md-6 mb-3">
-          <label for="contactName" class="form-label">Name</label>
-          <div class="input-group">
-            <span class="input-group-text"><i class="fas fa-user"></i></span>
-            <input type="text" class="form-control" name="contact_name" id="contactName" required>
-          </div>
-        </div>
-        <div class="col-12 col-md-6 mb-3">
-          <label for="contactEmail" class="form-label">Email</label>
-          <div class="input-group">
-            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-            <input type="email" class="form-control" name="contact_email" id="contactEmail" required>
-          </div>
-        </div>
-        <div class="col-12 mb-3">
-          <label for="message" class="form-label">Message</label>
-          <div class="input-group">
-            <span class="input-group-text"><i class="fas fa-comment"></i></span>
-            <textarea class="form-control" name="contact_message" id="message" rows="4" required></textarea>
-          </div>
-        </div>
-      </div>
-      <button type="submit" class="btn btn-brand">
-        <i class="fas fa-paper-plane me-2"></i> Send Message
-      </button>
-    </form>
+    <button class="btn btn-brand mb-4" data-bs-toggle="modal" data-bs-target="#contactModal">
+      <i class="fas fa-paper-plane me-2"></i> Open Contact Form
+    </button>
+    
+    <p class="text-muted mb-4">Click the button above to send us a message directly</p>
   </section>
 
 </main>
+
+<!-- Contact Modal -->
+<div class="modal fade contact-modal" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contactModalLabel"><i class="fas fa-envelope me-2"></i>Contact Us</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="{% url 'contact_form' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="contactName" class="form-label">Name</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+              <input type="text" class="form-control" name="contact_name" id="contactName" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="contactEmail" class="form-label">Email</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+              <input type="email" class="form-control" name="contact_email" id="contactEmail" required>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea class="form-control" name="contact_message" id="message" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn submit-btn">
+            <i class="fas fa-paper-plane me-2"></i> Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Footer -->
 <footer>
@@ -805,6 +903,16 @@
         });
       }
     });
+  });
+
+  // Focus on first input when modal opens
+  document.addEventListener('DOMContentLoaded', function() {
+    const contactModal = document.getElementById('contactModal');
+    if (contactModal) {
+      contactModal.addEventListener('shown.bs.modal', function () {
+        document.getElementById('contactName').focus();
+      });
+    }
   });
 </script>
 
