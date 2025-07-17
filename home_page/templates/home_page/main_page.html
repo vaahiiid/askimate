@@ -29,7 +29,7 @@
     body {
       background-color: var(--white);
       color: var(--primary);
-      padding-top: 80px; /* افزایش پدینگ برای نوبار بزرگتر */
+      padding-top: 70px; /* کاهش پدینگ برای نوبار */
       font-family: 'Poppins', sans-serif;
       scroll-behavior: smooth;
     }
@@ -223,11 +223,11 @@
       transition: all 0.3s ease;
     }
 
-    /* تغییرات جدید برای نوبار بزرگتر */
+    /* تغییرات جدید برای نوبار */
     .navbar {
-      padding-top: 1rem;
-      padding-bottom: 1rem;
-      min-height: 80px;
+      padding-top: 0.8rem; /* کاهش پدینگ بالا */
+      padding-bottom: 0.8rem; /* کاهش پدینگ پایین */
+      min-height: 70px; /* کاهش ارتفاع نوبار */
     }
 
     .navbar-nav .nav-item {
@@ -259,15 +259,16 @@
 
     /* Sections */
     section {
-      margin-bottom: 6rem;
-      padding-top: 2rem;
-      padding: 2rem;
+      margin-bottom: 4rem; /* کاهش فاصله بین سکشن‌ها */
+      padding-top: 1rem; /* کاهش پدینگ بالا */
+      padding: 1.5rem; /* کاهش پدینگ کلی */
       border-radius: 12px;
     }
 
     /* Background variations for sections */
     #join {
       background-color: rgba(255, 243, 209, 0.2);
+      margin-top: 0; /* حذف margin-top اضافی */
     }
     
     #about {
@@ -595,7 +596,7 @@
     @media (max-width: 992px) {
       #join {
         min-height: auto;
-        padding: 4rem 0;
+        padding: 3rem 0; /* کاهش پدینگ */
       }
       
       .askimate-gradient {
@@ -607,7 +608,7 @@
       }
       
       section {
-        margin-bottom: 4rem;
+        margin-bottom: 3rem; /* کاهش فاصله بین سکشن‌ها */
       }
     }
 
@@ -621,7 +622,7 @@
       }
       
       .join-box {
-        margin-top: 2rem;
+        margin-top: 1.5rem; /* کاهش فاصله */
       }
       
       section h2 {
@@ -636,6 +637,10 @@
       .navbar-brand img {
         height: 35px !important;
       }
+
+      body {
+        padding-top: 60px; /* کاهش پدینگ برای نوبار در موبایل */
+      }
     }
 
     @media (max-width: 576px) {
@@ -649,6 +654,14 @@
 
       .navbar-brand img {
         height: 30px !important;
+      }
+
+      .navbar {
+        min-height: 60px; /* کاهش ارتفاع نوبار در موبایل */
+      }
+
+      section {
+        padding: 1rem; /* کاهش پدینگ سکشن‌ها در موبایل */
       }
     }
   </style>
@@ -701,7 +714,7 @@
 </header>
 
 
-<main class="container pt-5 my-5">
+<main class="container pt-4 my-4"> <!-- کاهش padding-top و margin-top -->
 
   {% if messages %}
   <div class="container mb-4">
