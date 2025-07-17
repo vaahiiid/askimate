@@ -161,15 +161,13 @@
     }
 
     .navbar-fixed {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
-      box-shadow: 0 4px 15px rgba(66, 20, 125, 0.5);
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
+      background: var(--white) !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     a.nav-link {
-      color: var(--white);
+      color: var(--primary) !important;
       font-weight: 500;
       transition: all 0.3s ease;
       position: relative;
@@ -177,7 +175,7 @@
     }
 
     a.nav-link:hover {
-      color: var(--secondary);
+      color: var(--secondary) !important;
     }
 
     a.nav-link::after {
@@ -200,7 +198,7 @@
       font-weight: 700;
       font-size: 1.8rem;
       letter-spacing: 1.2px;
-      color: var(--white) !important;
+      color: var(--primary) !important;
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
@@ -213,6 +211,10 @@
 
     .navbar-brand i {
       font-size: 1.4rem;
+    }
+
+    .navbar-brand img {
+      filter: brightness(0) saturate(100%) invert(19%) sepia(55%) saturate(3765%) hue-rotate(261deg) brightness(89%) contrast(94%);
     }
 
     /* Offcanvas style for mobile */
@@ -237,6 +239,25 @@
     section {
       margin-bottom: 6rem;
       padding-top: 2rem;
+      padding: 2rem;
+      border-radius: 12px;
+    }
+
+    /* Background variations for sections */
+    #join {
+      background-color: rgba(255, 243, 209, 0.2);
+    }
+    
+    #about {
+      background-color: rgba(66, 20, 125, 0.05);
+    }
+    
+    #careers {
+      background-color: rgba(252, 168, 46, 0.05);
+    }
+    
+    #contact {
+      background-color: rgba(66, 20, 125, 0.05);
     }
 
     /* Hero Section */
@@ -260,15 +281,28 @@
       z-index: -1;
     }
 
-    #join h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(90deg, var(--primary), var(--dark));
+    /* استایل جدید برای عنوان AskiMate */
+    .askimate-gradient {
+      background: linear-gradient(90deg, #42147d, #fca82e);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      display: block;
+      font-size: 3rem;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      display: block;
+      font-weight: 700;
+      font-size: 1.8rem;
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    #join h1 {
       opacity: 0;
       transform: translateY(-20px);
       animation: fadeInDown 0.8s ease forwards;
@@ -294,6 +328,8 @@
       animation: fadeInUpBox 0.8s ease forwards;
       animation-delay: 0.6s;
       transition: all 0.3s ease;
+      margin: 0 auto;
+      max-width: 500px;
     }
 
     .join-box:hover {
@@ -526,37 +562,6 @@
       transform: translateY(0);
     }
 
-    /* Navbar scroll effect */
-    .navbar-scroll {
-      background-color: var(--white) !important;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
-      border-bottom-left-radius: 0 !important;
-      border-bottom-right-radius: 0 !important;
-    }
-
-    .navbar-scroll nav.navbar {
-      background-color: var(--white) !important;
-    }
-
-    .navbar-scroll a.nav-link,
-    .navbar-scroll .navbar-brand {
-      color: var(--primary) !important;
-    }
-
-    .navbar-scroll a.nav-link:hover,
-    .navbar-scroll .navbar-brand:hover {
-      color: var(--secondary) !important;
-    }
-
-    .navbar-scroll .btn-brand {
-      background-color: var(--secondary) !important;
-      color: var(--white) !important;
-    }
-
-    .navbar-scroll .btn-brand:hover {
-      background-color: #e99e27 !important;
-    }
-
     /* Responsive adjustments */
     @media (max-width: 992px) {
       #join {
@@ -564,8 +569,12 @@
         padding: 4rem 0;
       }
       
-      #join h1 {
+      .askimate-gradient {
         font-size: 2.5rem;
+      }
+      
+      .tagline {
+        font-size: 1.5rem;
       }
       
       section {
@@ -574,8 +583,12 @@
     }
 
     @media (max-width: 768px) {
-      #join h1 {
+      .askimate-gradient {
         font-size: 2rem;
+      }
+      
+      .tagline {
+        font-size: 1.3rem;
       }
       
       .join-box {
@@ -606,10 +619,10 @@
 
 <!-- Header with Fixed Navbar -->
 <header class="fixed-top navbar-fixed">
-  <nav class="navbar navbar-expand-md navbar-dark py-2">
+  <nav class="navbar navbar-expand-md navbar-light py-2">
     <div class="container">
       <a class="navbar-brand fw-bold" href="#">
-        <i class="fas fa-robot"></i> AskiMate
+        <img src="{% static 'images/askimate.png' %}" alt="AskiMate" height="30" class="d-inline-block align-top">
       </a>
 
       <!-- Toggler برای موبایل -->
@@ -663,7 +676,10 @@
   <!-- Hero Section -->
   <section class="row align-items-center" id="join">
     <div class="col-md-6">
-      <h1>AskiMate: Your AI Mate for Studying Abroad</h1>
+      <h1>
+        <span class="askimate-gradient">AskiMate</span>
+        <span class="tagline">Your AI Mate for Studying Abroad</span>
+      </h1>
       <p>From course selection and applications to everyday student life abroad, we are your lifelong AI companion.</p>
       <div class="d-flex gap-3">
         <div class="feature-item">
@@ -676,28 +692,30 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 join-box">
-      <h4><i class="fas fa-list-alt me-2"></i>Join the Waiting List</h4>
-      <form method="POST" action="{% url 'main_page' %}">
-        {% csrf_token %}
-        <div class="mb-3">
-          <label for="fullName" class="form-label">Full Name:</label>
-          <div class="input-group">
-            <span class="input-group-text"><i class="fas fa-user"></i></span>
-            <input type="text" id="fullName" name="fullName" class="form-control" required />
+    <div class="col-md-6">
+      <div class="join-box">
+        <h4><i class="fas fa-list-alt me-2"></i>Join the Waiting List</h4>
+        <form method="POST" action="{% url 'main_page' %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="fullName" class="form-label">Full Name:</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+              <input type="text" id="fullName" name="fullName" class="form-control" required />
+            </div>
           </div>
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Email Address:</label>
-          <div class="input-group">
-            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-            <input type="email" id="email" name="email" class="form-control" required />
+          <div class="mb-3">
+            <label for="email" class="form-label">Email Address:</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+              <input type="email" id="email" name="email" class="form-control" required />
+            </div>
           </div>
-        </div>
-        <button type="submit" class="btn btn-brand w-100">
-          <i class="fas fa-paper-plane me-2"></i> Join Now
-        </button>
-      </form>
+          <button type="submit" class="btn btn-brand w-100">
+            <i class="fas fa-paper-plane me-2"></i> Join Now
+          </button>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -746,12 +764,13 @@
   </section>
 
   <!-- Contact Us -->
-  <section id="contact" class="animate-on-scroll">
+  <section id="contact" class="animate-on-scroll text-center">
     <h2><i class="fas fa-envelope me-2"></i>Contact Us</h2>
-    <button class="btn btn-brand mb-4" data-bs-toggle="modal" data-bs-target="#contactModal">
-      <i class="fas fa-paper-plane me-2"></i> Open Contact Form
-    </button>
-    
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-brand mb-4" data-bs-toggle="modal" data-bs-target="#contactModal">
+        <i class="fas fa-paper-plane me-2"></i> Open Contact Form
+      </button>
+    </div>
     <p class="text-muted mb-4">Click the button above to send us a message directly</p>
   </section>
 
@@ -859,12 +878,12 @@
     const nav = header.querySelector('nav.navbar');
     if(window.scrollY > 50) {
       header.classList.add('navbar-scroll');
-      nav.classList.remove('navbar-dark');
-      nav.classList.add('navbar-light');
-    } else {
-      header.classList.remove('navbar-scroll');
       nav.classList.remove('navbar-light');
       nav.classList.add('navbar-dark');
+    } else {
+      header.classList.remove('navbar-scroll');
+      nav.classList.remove('navbar-dark');
+      nav.classList.add('navbar-light');
     }
   });
 
