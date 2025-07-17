@@ -237,25 +237,6 @@
     section {
       margin-bottom: 6rem;
       padding-top: 2rem;
-      padding: 2rem;
-      border-radius: 12px;
-    }
-
-    /* Background variations for sections */
-    #join {
-      background-color: rgba(255, 243, 209, 0.2);
-    }
-    
-    #about {
-      background-color: rgba(66, 20, 125, 0.05);
-    }
-    
-    #careers {
-      background-color: rgba(252, 168, 46, 0.05);
-    }
-    
-    #contact {
-      background-color: rgba(66, 20, 125, 0.05);
     }
 
     /* Hero Section */
@@ -313,8 +294,6 @@
       animation: fadeInUpBox 0.8s ease forwards;
       animation-delay: 0.6s;
       transition: all 0.3s ease;
-      margin: 0 auto;
-      max-width: 500px;
     }
 
     .join-box:hover {
@@ -630,7 +609,7 @@
   <nav class="navbar navbar-expand-md navbar-dark py-2">
     <div class="container">
       <a class="navbar-brand fw-bold" href="#">
-        <img src="{% static 'images/askimate.png' %}" alt="AskiMate" height="30" class="d-inline-block align-top">
+        <i class="fas fa-robot"></i> AskiMate
       </a>
 
       <!-- Toggler برای موبایل -->
@@ -684,7 +663,7 @@
   <!-- Hero Section -->
   <section class="row align-items-center" id="join">
     <div class="col-md-6">
-      <h1>Your Smart Companion for Studying Abroad</h1>
+      <h1>AskiMate: Your AI Mate for Studying Abroad</h1>
       <p>From course selection and applications to everyday student life abroad, we are your lifelong AI companion.</p>
       <div class="d-flex gap-3">
         <div class="feature-item">
@@ -697,30 +676,28 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="join-box">
-        <h4><i class="fas fa-list-alt me-2"></i>Join the Waiting List</h4>
-        <form method="POST" action="{% url 'main_page' %}">
-          {% csrf_token %}
-          <div class="mb-3">
-            <label for="fullName" class="form-label">Full Name:</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="fas fa-user"></i></span>
-              <input type="text" id="fullName" name="fullName" class="form-control" required />
-            </div>
+    <div class="col-md-6 join-box">
+      <h4><i class="fas fa-list-alt me-2"></i>Join the Waiting List</h4>
+      <form method="POST" action="{% url 'main_page' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="fullName" class="form-label">Full Name:</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-user"></i></span>
+            <input type="text" id="fullName" name="fullName" class="form-control" required />
           </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Email Address:</label>
-            <div class="input-group">
-              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-              <input type="email" id="email" name="email" class="form-control" required />
-            </div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email Address:</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+            <input type="email" id="email" name="email" class="form-control" required />
           </div>
-          <button type="submit" class="btn btn-brand w-100">
-            <i class="fas fa-paper-plane me-2"></i> Join Now
-          </button>
-        </form>
-      </div>
+        </div>
+        <button type="submit" class="btn btn-brand w-100">
+          <i class="fas fa-paper-plane me-2"></i> Join Now
+        </button>
+      </form>
     </div>
   </section>
 
