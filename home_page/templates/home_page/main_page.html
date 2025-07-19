@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="{% static 'images/askimate.png' %}" type="image/png">
   <title>AskiMate - Your AI Mate for Studying Abroad</title>
 
   <!-- Bootstrap CSS -->
@@ -456,87 +457,164 @@
       bottom: -15px !important;
     }
 
-    /* Footer styling */
-    footer {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
-      color: var(--white);
-      padding: 4rem 1rem;
-      font-size: 0.95rem;
-      line-height: 1.6;
-      position: relative;
-    }
+    /* ====== Improved Footer Styles ====== */
+footer {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+  color: var(--white);
+  padding: 4rem 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  position: relative;
+  overflow: hidden;
+}
 
-    footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--secondary), var(--primary));
-    }
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--secondary), var(--primary));
+  z-index: 1;
+}
 
-    .footer-container {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 2rem;
-    }
+.footer-container {
+  max-width: 1100px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem;
+  position: relative;
+  z-index: 2;
+}
 
-    .footer-section {
-      flex: 1 1 220px;
-      min-width: 180px;
-    }
+.footer-section {
+  flex: 1 1 220px;
+  min-width: 180px;
+}
 
-    .footer-section h5 {
-      margin-bottom: 1.5rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      font-size: 1.2rem;
-      position: relative;
-      padding-bottom: 0.5rem;
-    }
+.footer-section h5 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+  color: var(--white);
+}
 
-    .footer-section h5::after {
-      content: '';
-      position: absolute;
-      width: 50px;
-      height: 3px;
-      bottom: 0;
-      left: 0;
-      background-color: var(--secondary);
-    }
+.footer-section h5::after {
+  content: '';
+  position: absolute;
+  width: 50px;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--secondary);
+  transition: width 0.3s ease;
+}
 
-    .contact-info p, .contact-info a {
-      margin-bottom: 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      transition: all 0.3s ease;
-    }
+.footer-section:hover h5::after {
+  width: 70px;
+}
 
-    .contact-info a:hover {
-      color: var(--light) !important;
-      transform: translateX(5px);
-    }
+/* استایل جدید برای لینک‌ها و متن‌های فوتر */
+.footer-section p,
+.footer-section a {
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  position: relative;
+}
 
-    .footer-icon {
-      width: 20px;
-      height: 20px;
-      color: var(--secondary);
-      flex-shrink: 0;
-    }
+.footer-section a {
+  padding: 0.3rem 0;
+}
 
-    .footer-bottom {
-      text-align: center;
-      margin-top: 3rem;
-      padding-top: 1.5rem;
-      font-size: 0.85rem;
-      color: var(--light);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
+.footer-section a:hover {
+  color: var(--secondary) !important;
+  transform: translateX(8px);
+}
+
+.footer-section a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--secondary);
+  transition: width 0.3s ease;
+}
+
+.footer-section a:hover::after {
+  width: 100%;
+}
+
+/* استایل جدید برای آیکون‌ها */
+.footer-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--secondary);
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.footer-section a:hover .footer-icon {
+  color: var(--secondary);
+  transform: scale(1.2);
+}
+
+/* بخش پایینی فوتر */
+.footer-bottom {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 2;
+}
+
+/* افکت پس‌زمینه */
+footer::after {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(252, 168, 46, 0.1) 0%, rgba(252, 168, 46, 0) 70%);
+  bottom: -50px;
+  right: -50px;
+  z-index: 1;
+}
+
+/* رسپانسیو */
+@media (max-width: 768px) {
+  footer {
+    padding: 3rem 1rem;
+  }
+  
+  .footer-container {
+    gap: 1.5rem;
+  }
+  
+  .footer-section {
+    flex: 1 1 100%;
+    min-width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  
+  .footer-section h5 {
+    font-size: 1.1rem;
+  }
+}
 
     /* دکمه برگشت به بالا */
     .back-to-top {
