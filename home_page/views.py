@@ -15,9 +15,13 @@ def main_page(request):
         email = request.POST.get('email', '').strip().lower()
 
         if full_name and email:
-            csv_path = os.path.join(settings.BASE_DIR, 'user_data.csv')
+            # --- USE CORRECT DATA FOLDER ---
+            csv_dir = os.path.join(settings.BASE_DIR, 'data')
+            os.makedirs(csv_dir, exist_ok=True)
+            csv_path = os.path.join(csv_dir, 'user_data.csv')
+            # --------------------------------
 
-            # بررسی اینکه ایمیل قبلاً ثبت شده یا نه
+            # Check if email is already registered
             existing_emails = set()
             if os.path.isfile(csv_path):
                 try:
@@ -34,7 +38,7 @@ def main_page(request):
                 messages.error(request, "You have already joined the waiting list before.")
                 return redirect('main_page')
 
-            # ذخیره اطلاعات در CSV
+            # Save info to CSV
             file_exists = os.path.isfile(csv_path)
             try:
                 with open(csv_path, mode='a', newline='', encoding='utf-8') as csv_file:
@@ -47,7 +51,7 @@ def main_page(request):
                 messages.error(request, "Something went wrong while saving your data.")
                 return redirect('main_page')
 
-            # ارسال ایمیل تاییدیه
+            # Send confirmation email
             subject = "Welcome to AskiMate Waiting List!"
             message = (
                 f"Hello {full_name},\n\n"
@@ -83,7 +87,7 @@ def contact_form(request):
         full_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
 
         try:
-            # ارسال ایمیل به تیم
+            # Send email to the team
             send_mail(
                 subject="New Contact Form Submission",
                 message=full_message,
@@ -92,7 +96,7 @@ def contact_form(request):
                 fail_silently=False,
             )
 
-            # ارسال تاییدیه به کاربر
+            # Send confirmation to user
             user_subject = "We received your message at AskiMate!"
             user_message = (
                 f"Hi {name},\n\n"
