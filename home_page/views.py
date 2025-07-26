@@ -15,7 +15,7 @@ def main_page(request):
         email = request.POST.get('email', '').strip().lower()
 
         if full_name and email:
-            csv_path = os.path.join(settings.BASE_DIR, 'user_data.csv')
+            csv_file_path = os.path.join(settings.BASE_DIR, 'user_data.csv')
 
             # بررسی اینکه ایمیل قبلاً ثبت شده یا نه
             existing_emails = set()
