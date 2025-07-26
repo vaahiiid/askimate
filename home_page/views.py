@@ -1,7 +1,9 @@
 import csv
 import os
 import logging
-
+import os
+from django.conf import settings
+import csv
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
@@ -9,15 +11,16 @@ from django.core.mail import send_mail
 
 logger = logging.getLogger(__name__)
 
+csv_path = os.path.join(settings.BASE_DIR, 'data', 'user_data.csv')
 def main_page(request):
     if request.method == "POST":
         full_name = request.POST.get('fullName', '').strip()
         email = request.POST.get('email', '').strip().lower()
 
         if full_name and email:
-            csv_path = os.path.join(settings.BASE_DIR, 'user_data.csv')
+            csv_path = os.path.join(settings.BASE_DIR, 'data', 'user_data.csv')
 
-            # بررسی اینکه ایمیل قبلاً ثبت شده یا نه
+          
             existing_emails = set()
             if os.path.isfile(csv_path):
                 try:
