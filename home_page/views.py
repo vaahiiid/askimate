@@ -15,13 +15,13 @@ def main_page(request):
         email = request.POST.get('email', '').strip().lower()
 
         if full_name and email:
-            # --- USE CORRECT DATA FOLDER ---
+            # مسیر ذخیره‌سازی: به جای روت، در فولدر data
             csv_dir = os.path.join(settings.BASE_DIR, 'data')
-            os.makedirs(csv_dir, exist_ok=True)
-            csv_path = os.path.join(csv_dir, 'user_data.csv')
-            # --------------------------------
+            os.makedirs(csv_dir, exist_ok=True)  # اگر نبود بسازش
 
-            # Check if email is already registered
+            csv_path = os.path.join(csv_dir, 'user_data.csv')
+
+            # بررسی اینکه ایمیل قبلاً ثبت شده یا نه
             existing_emails = set()
             if os.path.isfile(csv_path):
                 try:
@@ -38,7 +38,7 @@ def main_page(request):
                 messages.error(request, "You have already joined the waiting list before.")
                 return redirect('main_page')
 
-            # Save info to CSV
+            # ذخیره اطلاعات در CSV
             file_exists = os.path.isfile(csv_path)
             try:
                 with open(csv_path, mode='a', newline='', encoding='utf-8') as csv_file:
@@ -51,7 +51,7 @@ def main_page(request):
                 messages.error(request, "Something went wrong while saving your data.")
                 return redirect('main_page')
 
-            # Send confirmation email
+            # ارسال ایمیل تاییدیه
             subject = "Welcome to AskiMate Waiting List!"
             message = (
                 f"Hello {full_name},\n\n"
@@ -87,7 +87,7 @@ def contact_form(request):
         full_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
 
         try:
-            # Send email to the team
+            # ارسال ایمیل به تیم
             send_mail(
                 subject="New Contact Form Submission",
                 message=full_message,
@@ -96,7 +96,7 @@ def contact_form(request):
                 fail_silently=False,
             )
 
-            # Send confirmation to user
+            # ارسال تاییدیه به کاربر
             user_subject = "We received your message at AskiMate!"
             user_message = (
                 f"Hi {name},\n\n"
