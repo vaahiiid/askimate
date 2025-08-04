@@ -1,11 +1,9 @@
-import csv
-import os
 import logging
-
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
+from .models import WaitingListEntry  
 
 logger = logging.getLogger(__name__)
 
@@ -15,49 +13,33 @@ def main_page(request):
         email = request.POST.get('email', '').strip().lower()
 
         if full_name and email:
-            # مسیر ذخیره‌سازی: به جای روت، در فولدر data
-            csv_dir = os.path.join(settings.BASE_DIR, 'data')
-            os.makedirs(csv_dir, exist_ok=True)  # اگر نبود بسازش
+            # بررسی اینکه ایمیل قبلاً ثبت شده یا نه (در دیتابیس)
+            try:
+                email_exists = WaitingListEntry.objects.filter(email=email).exists()
+            except Exception as e:
+                logger.error(f"Error checking DB for email: {e}")
+                messages.error(request, "Server error while checking your email.")
+                return redirect('main_page')
 
-            csv_path = os.path.join(csv_dir, 'user_data.csv')
-
-            # بررسی اینکه ایمیل قبلاً ثبت شده یا نه
-            existing_emails = set()
-            if os.path.isfile(csv_path):
-                try:
-                    with open(csv_path, mode='r', encoding='utf-8') as f:
-                        reader = csv.DictReader(f)
-                        for row in reader:
-                            existing_emails.add(row['Email'].strip().lower())
-                except Exception as e:
-                    logger.error(f"Error reading CSV: {e}")
-                    messages.error(request, "Server error while checking your email.")
-                    return redirect('main_page')
-
-            if email in existing_emails:
+            if email_exists:
                 messages.error(request, "You have already joined the waiting list before.")
                 return redirect('main_page')
 
-            # ذخیره اطلاعات در CSV
-            file_exists = os.path.isfile(csv_path)
+            # ذخیره اطلاعات در دیتابیس
             try:
-                with open(csv_path, mode='a', newline='', encoding='utf-8') as csv_file:
-                    writer = csv.writer(csv_file)
-                    if not file_exists:
-                        writer.writerow(['Full Name', 'Email'])
-                    writer.writerow([full_name, email])
+                WaitingListEntry.objects.create(full_name=full_name, email=email)
             except Exception as e:
-                logger.error(f"Failed to write to CSV: {e}")
+                logger.error(f"Failed to write to DB: {e}")
                 messages.error(request, "Something went wrong while saving your data.")
                 return redirect('main_page')
 
-            # ارسال ایمیل تاییدیه
+            # ارسال ایمیل تاییدیه - بدون تغییر
             subject = "Welcome to AskiMate Waiting List!"
             message = (
-                f"Hello {full_name},\n\n"
+                f"Hello {full_name},"
                 f"Thank you for joining the AskiMate waiting list! "
-                f"We'll keep you updated with the latest news and updates.\n\n"
-                f"Best regards,\nThe AskiMate Team"
+                f"We'll keep you updated with the latest news and updates."
+                f"Best regards,The AskiMate Team"
             )
 
             try:
@@ -84,7 +66,7 @@ def contact_form(request):
             messages.error(request, "All fields are required.")
             return redirect('main_page')
 
-        full_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+        full_message = f"Name: {name}Email: {email}Message:{message}"
 
         try:
             # ارسال ایمیل به تیم
@@ -99,11 +81,11 @@ def contact_form(request):
             # ارسال تاییدیه به کاربر
             user_subject = "We received your message at AskiMate!"
             user_message = (
-                f"Hi {name},\n\n"
+                f"Hi {name},"
                 f"Thanks for reaching out to us! "
-                f"We’ve received your message and will get back to you as soon as possible.\n\n"
-                f"Your message:\n{message}\n\n"
-                f"Best,\nAskiMate Team"
+                f"We’ve received your message and will get back to you as soon as possible."
+                f"Your message:{message}"
+                f"Best,AskiMate Team"
             )
 
             send_mail(
